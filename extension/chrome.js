@@ -72,6 +72,10 @@ var dimensions = {
         38: "images/icon@2x.png"
       }
     });
+    this.worker.postMessage({ 
+      type: 'destroy',
+      debug: debug 
+    });
   },
 
   onBrowserDisconnect: function(){

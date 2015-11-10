@@ -106,3 +106,14 @@
   .y.fn-axis {
     width: 1px;
   }
+
+.fn-ratio {
+  display: block; 
+  width: 150px; 
+  height: 20px;
+  position: fixed; 
+  top: 0; 
+  right: 0; 
+  border: 1px solid blue;
+  z-index: 1999999;
+}

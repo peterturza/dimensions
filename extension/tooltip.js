@@ -32,7 +32,7 @@ port.onMessage.addListener(function(event){
   switch(event.type){
     case 'init':
       debug = event.debug;
-
+      createRatioInput();
       if(debug)
         createDebugScreen();
       break;
@@ -58,6 +58,21 @@ function onResizeWindow(){
 }
 
 onResizeWindow();
+
+function createRatioInput() {
+  ratioInput = document.createElement('input');
+  ratioInput.className = 'fn-ratio';
+  ratioInput.type='number';
+  ratioInput.step='0.1';
+  ratioInput.value = '1';
+  body.appendChild(ratioInput);
+}
+
+function removeRatioInput() {
+  if (ratioInput) {
+    body.removeChild(ratioInput);
+  } 
+}
 
 function createDebugScreen(){
   debugScreen = document.createElement('canvas');
@@ -107,6 +122,7 @@ function destroy(){
 
   removeDebugScreen();
   removeDimensions();
+  removeRatioInput();
   enableCursor();
 }
 
@@ -238,7 +254,12 @@ function showDimensions(dimensions){
   tooltip.className = 'fn-tooltip';
 
   // add +1 on both axis because of the pixel below the mouse pointer
-  tooltip.textContent = (measureWidth+1) +" x "+ (measureHeight+1) + " px";
+  var textContent = (measureWidth+1) +" x "+ (measureHeight+1) + " px";
+  var ratio = parseFloat(ratioInput.value)
+  if (ratio > 0) {
+    textContent += ("<br> ("+ Math.round((measureWidth+1)*ratio) +" x "+ Math.round((measureHeight+1)*ratio) +")")
+  }
+  tooltip.innerHTML = textContent;
 
   if(dimensions.y < 26)
     tooltip.classList.add('bottom');
